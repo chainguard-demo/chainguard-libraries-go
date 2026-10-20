@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#14003D">
+  <title>Chainguard Bank · Go Libraries Demo</title>
+  <link rel="icon" href="/images/chainguard-icon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/styles.css">
+  <script src="/app.js" defer></script>
+</head>
+<body>
+  <header class="header">
+    <div class="header-content">
+      <a class="logo" href="/" aria-label="Chainguard Libraries home"><img src="/images/chainguard-icon.svg" alt=""><span>Chainguard Libraries</span></a>
+      <nav class="nav-links" aria-label="Demo applications">
+        <a href="http://localhost:5001" title="Requires the separate Java demo"><img src="/images/java-logo.svg" alt="">Java</a>
+        <a href="http://localhost:5002" title="Requires the separate JavaScript demo"><img src="/images/javascript-logo.svg" alt="">JavaScript</a>
+        <a href="/" class="current" aria-current="page"><span class="go-mark" aria-hidden="true">GO</span>Go</a>
+      </nav>
+    </div>
+  </header>
+  <main>
+    <section class="hero">
+      <div class="hero-label">Trusted source for open source</div>
+      <div class="hero-heading"><h1>A better foundation for your banking app.</h1><span class="demo-badge"><span></span>Go libraries demo</span></div>
+      <p class="hero-description">Everyday banking, powered by Go. A working demo built with open source dependencies through Chainguard Libraries.</p>
+    </section>
+    <section class="content-section">
+      <div class="section-inner">
+        <div class="workspace">
+          <div class="tabs" role="tablist" aria-label="Application views">
+            <button class="tab active" id="tab-banking" role="tab" aria-selected="true" aria-controls="banking" data-tab="banking">Banking overview</button>
+            <button class="tab" id="tab-libraries" role="tab" aria-selected="false" aria-controls="libraries" tabindex="-1" data-tab="libraries">Go dependencies <span class="count" id="dependency-count">—</span></button>
+            <button class="tab" id="tab-module" role="tab" aria-selected="false" aria-controls="module" tabindex="-1" data-tab="module">go.mod</button>
+          </div>
+          <section id="banking" role="tabpanel" aria-labelledby="tab-banking">
+            <div class="section-heading"><div><p class="eyebrow">Your money, at a glance</p><h2>Welcome back, <span id="customer">Alex</span>.</h2><p class="muted">A little clarity for your everyday finances.</p></div><div class="avatar" aria-label="Alex Morgan">AM</div></div>
+            <div id="dashboard-error" class="notice error" role="alert" hidden></div>
+            <div class="accounts">
+              <article class="account-card total-card"><div class="account-top"><span>Total balance</span><span class="card-icon" aria-hidden="true">◈</span></div><p class="balance" id="total-balance">—</p><p class="account-caption">Across your accounts <span class="currency">USD</span></p><div class="card-decoration" aria-hidden="true"></div></article>
+              <article class="account-card"><div class="account-top"><span>Everyday Checking</span><span class="card-icon" aria-hidden="true">↗</span></div><p class="balance" id="checking-balance">—</p><p class="account-caption">Account •••• 4821 <span class="account-type">Checking</span></p></article>
+              <article class="account-card"><div class="account-top"><span>Goals Savings</span><span class="card-icon savings-icon" aria-hidden="true">◇</span></div><p class="balance" id="savings-balance">—</p><p class="account-caption">Account •••• 7903 <span class="account-type">Savings</span></p></article>
+            </div>
+            <div class="banking-grid">
+              <section class="transactions-panel" aria-labelledby="transactions-title">
+                <div class="panel-heading"><div><h3 id="transactions-title">Recent transactions</h3><p class="muted small">The latest activity across your accounts.</p></div><span class="activity-dot" title="Live in-memory data"></span></div>
+                <div class="filters"><label class="search"><span aria-hidden="true">⌕</span><input id="transaction-search" type="search" placeholder="Search transactions" aria-label="Search transactions"></label><select id="account-filter" aria-label="Filter transactions by account"><option value="all">All accounts</option><option value="checking">Checking</option><option value="savings">Savings</option></select></div>
+                <div class="table-wrap"><table><thead><tr><th scope="col">Transaction</th><th scope="col">Date</th><th scope="col" class="amount">Amount</th></tr></thead><tbody id="transactions"><tr><td colspan="3" class="empty">Loading your transactions…</td></tr></tbody></table></div>
+                <p class="table-footer" id="transaction-summary">Recent account activity</p>
+              </section>
+              <aside class="transfer-panel" aria-labelledby="transfer-title"><div class="panel-heading"><div><h3 id="transfer-title">Move money</h3><p class="muted small">Between your accounts. In an instant.</p></div><span class="transfer-symbol" aria-hidden="true">⇄</span></div>
+                <form id="transfer-form">
+                  <label for="from-account">From account</label><select id="from-account" name="from" required><option value="checking">Everyday Checking • 4821</option><option value="savings">Goals Savings • 7903</option></select>
+                  <label for="to-account">To account</label><select id="to-account" name="to" required><option value="savings">Goals Savings • 7903</option><option value="checking">Everyday Checking • 4821</option></select>
+                  <label for="transfer-amount">Amount</label><div class="amount-input"><span>$</span><input id="transfer-amount" name="amount" type="number" min="0.01" max="999999999.99" step="0.01" placeholder="0.00" required inputmode="decimal"><span>USD</span></div>
+                  <label for="transfer-memo">Note <span class="optional">(optional)</span></label><input id="transfer-memo" name="memo" maxlength="120" placeholder="What’s this transfer for?">
+                  <button type="submit" class="primary-button" id="transfer-submit" disabled>Transfer money <span aria-hidden="true">↗</span></button>
+                  <p class="transfer-footnote">Demo funds only. No real money moves.</p><div id="transfer-status" class="notice" role="status" aria-live="polite" hidden></div>
+                </form>
+              </aside>
+            </div>
+            <div class="demo-note"><span class="note-icon" aria-hidden="true">i</span><p><strong>A small app. Real Go dependencies.</strong> Transfers use exact decimal arithmetic and unique IDs. This shared demo keeps data in memory and resets when the server restarts.</p><button class="text-button" data-open-libraries>Explore libraries <span aria-hidden="true">→</span></button></div>
+          </section>
+          <section id="libraries" role="tabpanel" aria-labelledby="tab-libraries" hidden>
+            <div class="section-heading"><div><p class="eyebrow">Inside the application</p><h2>Go dependencies</h2><p class="muted">The modules compiled into this running Go server.</p></div><span class="go-tile" aria-hidden="true">GO</span></div>
+            <div id="dependency-list" class="dependency-grid"><p class="muted">Loading build information…</p></div>
+            <div class="demo-note"><span class="note-icon" aria-hidden="true">i</span><p id="dependency-note">Module metadata describes the running binary; it is not a provenance verification.</p></div>
+            <p class="runtime muted" id="runtime"></p>
+          </section>
+          <section id="module" role="tabpanel" aria-labelledby="tab-module" hidden>
+            <div class="section-heading"><div><p class="eyebrow">Built with Go</p><h2>Application manifest</h2><p class="muted">The embedded <code>go.mod</code> used to build this application.</p></div></div>
+            <div class="code-heading"><span>go.mod</span><button id="copy-module" class="text-button">Copy manifest</button></div><pre class="module-code"><code id="module-content">Loading go.mod…</code></pre>
+            <div class="demo-note"><span class="note-icon" aria-hidden="true">i</span><p>Build with <code>./build-and-run.sh</code>. Go uses your user-wide settings and the credentials in <code>~/.netrc</code>.</p></div>
+          </section>
+        </div>
+        <footer><span>Chainguard Bank <span class="footer-divider">/</span> Go Libraries Demo</span><span>Built from source. Ready to explore.</span></footer>
+      </div>
+    </section>
+  </main>
+  <dialog id="dependency-dialog" aria-labelledby="dependency-title"><div class="dialog-heading"><h2 id="dependency-title">Module details</h2><button id="close-dialog" class="close-button" aria-label="Close module details">×</button></div><pre id="dependency-details"></pre><p class="muted small">Build information reported by Go’s runtime/debug package.</p></dialog>
+</body>
+</html>
