@@ -1,0 +1,6 @@
+.netrc
+*.netrc
+/bin/
+/artifacts/
+/chainguard-go-bank
+.DS_Store
